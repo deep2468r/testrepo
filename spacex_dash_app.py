@@ -7,7 +7,7 @@ from dash.dependencies import Input, Output
 import plotly.express as px
 
 # Read the airline data into pandas dataframe
-spacex_df = pd.read_csv("spacex_launch_dash.csv")
+spacex_df = pd.read_csv("home/deep2468r/testrepo/spacex_launch_dash.csv")
 max_payload = spacex_df['Payload Mass (kg)'].max()
 min_payload = spacex_df['Payload Mass (kg)'].min()
 
@@ -61,14 +61,14 @@ app.layout = html.Div(children=[html.H1('SpaceX Launch Records Dashboard',
 def get_pie_chart(entered_site):
     filtered_df = spacex_df[spacex_df['Launch Site'] == entered_site]
     if entered_site == 'ALL':
-        fig = px.pie(spacex_df, values='class', 
-        names='Launch Site', 
+        fig = px.pie(spacex_df, values='class',
+        names='Launch Site',
         title='Total Success Launches By Site')
         return fig
     else:
         # return the outcomes piechart for a selected site
-        fig = px.pie(values=filtered_df.groupby(['class'])['class'].count().values.tolist(), 
-        names=filtered_df.groupby(['class'])['class'].count().index.tolist(), 
+        fig = px.pie(values=filtered_df.groupby(['class'])['class'].count().values.tolist(),
+        names=filtered_df.groupby(['class'])['class'].count().index.tolist(),
         title='Total Success Launches for site %s' % entered_site)
         return fig
 
@@ -79,7 +79,7 @@ def get_pie_chart(entered_site):
 
 
 def get_scatter_chart(entered_site, payload_range):
-    range_df = spacex_df[(spacex_df['Payload Mass (kg)']>=payload_range[0]) & 
+    range_df = spacex_df[(spacex_df['Payload Mass (kg)']>=payload_range[0]) &
                          (spacex_df['Payload Mass (kg)']<=payload_range[1])]
     if entered_site == 'ALL':
         fig = px.scatter(range_df, x='Payload Mass (kg)', y='class', color='Booster Version Category')
